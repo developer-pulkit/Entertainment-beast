@@ -1,23 +1,12 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { makeStyles } from "@mui/material";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-
-const useStyles = makeStyles({
-  root: {
-    width: 500,
-    position: "fixed",
-    bottom: 0,
-    backgroundColor: "#2d313a",
-    zIndex: 100,
-  },
-});
+import HdIcon from "@mui/icons-material/Hd";
+import LiveTvIcon from "@mui/icons-material/LiveTv";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function SimpleBottomNavigation() {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   return (
@@ -27,11 +16,35 @@ export default function SimpleBottomNavigation() {
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
-      className={classes.root}
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        backgroundColor: "#39445a",
+      }}
     >
-      <BottomNavigationAction label="Recents" icon={<WhatshotIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="Trending"
+        icon={<WhatshotIcon />}
+      />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="Movies"
+        icon={<HdIcon />}
+      />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="TV Series"
+        icon={<LiveTvIcon />}
+      />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="Search"
+        icon={<SearchIcon />}
+      />
     </BottomNavigation>
   );
 }
