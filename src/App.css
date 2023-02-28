@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap");
 .app {
   min-height: 100vh;
   background-color: #576789;
@@ -10,4 +11,15 @@
   .app {
     padding-top: 70px;
   }
+}
+
+.pageTitle {
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 2vw;
+  padding: 4px;
+  border-radius: 50px;
+  color: white;
 }

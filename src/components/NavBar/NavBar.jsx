@@ -5,9 +5,25 @@ import WhatshotIcon from "@mui/icons-material/Whatshot";
 import HdIcon from "@mui/icons-material/Hd";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 export default function SimpleBottomNavigation() {
-  const [value, setValue] = React.useState(0);
+  const navigate = useNavigate();
+
+  const [value, setValue] = useState(0);
+
+  // everytime value changes when onChange is called then conditional statement directs navigation to different pages
+  useEffect(() => {
+    if (value === 0) {
+      navigate("/");
+    } else if (value === 1) {
+      navigate("/movies");
+    } else if (value === 2) {
+      navigate("/tvSeries");
+    } else if (value === 3) {
+      navigate("/search");
+    }
+  }, [value]);
 
   return (
     <BottomNavigation
@@ -23,6 +39,7 @@ export default function SimpleBottomNavigation() {
         right: 0,
         zIndex: 100,
         backgroundColor: "#39445a",
+        width: "100%",
       }}
     >
       <BottomNavigationAction
