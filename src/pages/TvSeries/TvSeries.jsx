@@ -1,10 +1,61 @@
-import React from "react";
-import "./TvSeries.css";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import SingleContent from "../../components/SingleContent/SingleContent";
+import CustomPagination from "../../components/Pagination/CustomPagination";
+import Genres from "../../components/Genres/Genres";
+import useGenres from "../../hooks/useGenre";
 
 function TvSeries() {
+  const [page, setPage] = useState(1);
+  const [content, setContent] = useState([]);
+  const [numOfPages, setnumOfPages] = useState();
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [genres, setGenres] = useState([]);
+
+  const genreforURL = useGenres(selectedGenres);
+
+  const fetchTvSeries = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`
+    );
+
+    setContent(data.results);
+    setnumOfPages(data.total_pages);
+  };
+
+  useEffect(() => {
+    fetchTvSeries();
+  }, [page, genreforURL]);
+
   return (
     <div>
-      <span className="pageTitle">TvSeries</span>
+      <span className="pageTitle">Tv Series</span>
+      <Genres
+        type="tv"
+        selectedGenres={selectedGenres}
+        setSelectedGenres={setSelectedGenres}
+        genres={genres}
+        setGenres={setGenres}
+        setPage={setPage}
+      />
+      <div className="trending">
+        {content &&
+          content.map((data) => (
+            <SingleContent
+              data={data}
+              key={data.id}
+              id={data.id}
+              poster={data.poster_path}
+              title={data.title || data.name}
+              date={data.first_air_data || data.release_date}
+              media_type="tv"
+              vote_average={data.vote_average}
+            />
+          ))}
+      </div>
+      {numOfPages > 1 && (
+        <CustomPagination setPage={setPage} numOfPages={numOfPages} />
+      )}
     </div>
   );
 }
